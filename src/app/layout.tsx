@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { RelayEnvironmentProvider } from "react-relay";
+import { getCurrentEnvironment } from "@/relay/environment";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,9 +17,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const environment = getCurrentEnvironment()
+
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <RelayEnvironmentProvider environment={environment}>
+        <body className={inter.className}>{children}</body>
+      </RelayEnvironmentProvider>
     </html>
   );
 }
